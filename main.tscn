@@ -434,6 +434,54 @@ scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_g4v7s")
 script = ExtResource("11_dg77c")
 
+[node name="number" type="Label" parent="UI/MarginContainer/CenterContainer/Tool" unique_id=1658983411]
+unique_name_in_owner = true
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -14.75
+offset_top = -16.5
+offset_right = -3.75
+offset_bottom = -3.5
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 8
+theme_override_fonts/font = ExtResource("11_efxa6")
+theme_override_font_sizes/font_size = 8
+text = "12"
+
+[node name="MarginContainer2" type="MarginContainer" parent="UI" unique_id=932847102]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -64.0
+offset_right = 64.0
+grow_vertical = 0
+
+[node name="tooltip" type="Label" parent="UI/MarginContainer2" unique_id=762084032]
+unique_name_in_owner = true
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -14.75
+offset_top = -16.5
+offset_right = -3.75
+offset_bottom = -3.5
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 8
+theme_override_fonts/font = ExtResource("11_efxa6")
+theme_override_font_sizes/font_size = 8
+text = "12"
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer2/tooltip" unique_id=962906667]
+
+[node name="ColorRect" type="ColorRect" parent="UI/MarginContainer2/tooltip/MarginContainer" unique_id=1368964740]
+
 [node name="Menu" type="CanvasLayer" parent="." unique_id=732038459]
 unique_name_in_owner = true
 visible = false
