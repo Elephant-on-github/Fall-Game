@@ -176,15 +176,15 @@ func _input(event: InputEvent) -> void:
 			return
 
 		match current_tool:
-		"spade":
-			if existing_tile != null and tile_map_layer.get_cell_source_id(tile_coords) == 8:
-				tile_map_layer.erase_cell(tile_coords)
+			"spade":
+				if existing_tile != null and tile_map_layer.get_cell_source_id(tile_coords) in [8, 0]:
+					tile_map_layer.erase_cell(tile_coords)
 
-		"hoe":
-			if existing_tile != null:
-				_show_tooltip("Can't hoe here!")
-				return
-			tile_map_layer.set_cell(tile_coords, 8, Vector2i.ZERO, Vector2i.ZERO)
+			"hoe":
+				if existing_tile != null:
+					_show_tooltip("Can't hoe here!")
+					return
+				tile_map_layer.set_cell(tile_coords, 8, Vector2i.ZERO, Vector2i.ZERO)
 			"scythe":
 				if crops.has(tile_key):
 					var crop = crops[tile_key]
@@ -198,21 +198,21 @@ func _input(event: InputEvent) -> void:
 				else:
 					_show_tooltip("No crop to harvest!")
 
-		_:
-			if source_id != 8:
-				_show_tooltip("Need to hoe this first!")
-				return
-				var crop_type = current_tool
-				if seeds[crop_type] <= 0:
-					_show_tooltip("No seeds left!")
+			_:
+				if source_id != 8:
+					_show_tooltip("Need to hoe this first!")
 					return
-				seeds[crop_type] -= 1
-				var new_crop = crop_scene.instantiate()
-				new_crop.stop()
-				new_crop.frame = crop_frames[crop_type]
-				new_crop.global_position = world_pos
-				get_tree().current_scene.add_child(new_crop)
-				%Tool.update_seed_display(crop_type, seeds[crop_type])
+					var crop_type = current_tool
+					if seeds[crop_type] <= 0:
+						_show_tooltip("No seeds left!")
+						return
+					seeds[crop_type] -= 1
+					var new_crop = crop_scene.instantiate()
+					new_crop.stop()
+					new_crop.frame = crop_frames[crop_type]
+					new_crop.global_position = world_pos
+					get_tree().current_scene.add_child(new_crop)
+					%Tool.update_seed_display(crop_type, seeds[crop_type])
 
 func _update_score() -> void:
 	score_label.text = str(score)
