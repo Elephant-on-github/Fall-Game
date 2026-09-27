@@ -11,7 +11,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	global_position.y += fall_speed * delta
-	global_position.x = start_position.x + sin(OS.get_ticks_msec() / 1000.0 * sway_speed) * sway_amount
+	global_position.x = start_position.x + sin(Time.get_ticks_msec() / 1000.0 * sway_speed) * sway_amount
 	var cam = get_node_or_null("/root/main/Camera2D")
 	if cam != null:
 		var threshold = cam.position.y + (get_viewport_rect().size.y / cam.zoom.y) + 50
