@@ -18,9 +18,17 @@ var crop_frames: Dictionary = {
 	"cabbage": 16,
 	"wheat": 20
 }
-
+var seeds: Dictionary = {
+	"carrot": 5,
+	"radish": 5,
+	"corn": 5,
+	"tomato": 5,
+	"cabbage": 5,
+	"wheat": 5
+}
 
 @onready var tile_map_layer: TileMapLayer = %Main_Tiles
+@onready var tooltip_label = get_node("/root/main/UI/MarginContainer2/tooltip")
 
 func _physics_process(_delta: float) -> void:
 	# Track whether a movement key is actually being held down
@@ -85,6 +93,7 @@ func _input(event: InputEvent) -> void:
 
 			"hoe":
 				if existing_tile != null:
+					_show_tooltip("Can't hoe here!")
 					return
 				var new_dirt = dirt_scene.instantiate()
 				new_dirt.global_position = world_pos
@@ -93,15 +102,34 @@ func _input(event: InputEvent) -> void:
 
 			_:
 				if not hoed_tiles.has(tile_key):
+					_show_tooltip("Need to hoe this first!")
 					return
 				var crop_type = current_tool
+				if seeds[crop_type] <= 0:
+					_show_tooltip("No seeds left!")
+					return
+				seeds[crop_type] -= 1
 				var new_crop = crop_scene.instantiate()
 				new_crop.stop()
 				new_crop.frame = crop_frames[crop_type]
 				new_crop.global_position = world_pos
 				get_tree().current_scene.add_child(new_crop)
+				%Tool.update_seed_display(crop_type, seeds[crop_type])
+
+func _show_tooltip(text: String) -> void:
+	tooltip_label.text = text
+	tooltip_label.visible = true
+	tooltip_label.modulate.a = 1.0
+	var tween = create_tween()
+	tween.tween_property(tooltip_label, "modulate:a", 0.0, 0.8)
+	tween.tween_callback(func(): tooltip_label.visible = false)
+
 func _on_set_tool(tool: String) -> void:
 	current_tool = tool
+	if tool in seeds:
+		%Tool.update_seed_display(tool, seeds[tool])
+	else:
+		%Tool.update_seed_display(tool, 0)
 func _ready() -> void:
 	set_tool.emit("none")
 	%Menu.visible = true
