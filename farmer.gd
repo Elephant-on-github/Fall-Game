@@ -190,7 +190,7 @@ func _input(event: InputEvent) -> void:
 				new_dirt.global_position = world_pos
 				get_tree().current_scene.add_child(new_dirt)
 				hoed_tiles[tile_key] = true
-			"scythe":
+		"scythe":
 			if crops.has(tile_key):
 				var crop = crops[tile_key]
 				if crop.frame % 4 == 2:
