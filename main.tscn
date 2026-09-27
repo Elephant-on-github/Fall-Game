@@ -472,7 +472,32 @@ theme_override_fonts/font = ExtResource("11_efxa6")
 theme_override_font_sizes/font_size = 32
 text = "12"
 
+[node name="MarginContainer3" type="MarginContainer" parent="UI" unique_id=812561614]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -128.0
+offset_top = -128.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="CenterContainer" type="CenterContainer" parent="UI/MarginContainer3" unique_id=273694125]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Score" type="Label" parent="UI/MarginContainer3/CenterContainer" unique_id=1284642618]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("11_efxa6")
+theme_override_font_sizes/font_size = 64
+text = "12"
+
 [node name="MarginContainer2" type="MarginContainer" parent="UI" unique_id=932847102]
+z_index = 20
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
