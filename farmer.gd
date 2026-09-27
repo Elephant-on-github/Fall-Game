@@ -26,9 +26,37 @@ var seeds: Dictionary = {
 	"cabbage": 5,
 	"wheat": 5
 }
+var score: int = 0
+var shop_open: bool = false
+var shop_items: Dictionary = {
+	"Carrot": 3,
+	"Raddish": 3,
+	"Corn": 3,
+	"Tomato": 3,
+	"Cabbage": 3,
+	"wheat": 3,
+	"Scythe": 3,
+	"Hoe": 3,
+	"Spade": 3
+}
+var shop_seed_map: Dictionary = {
+	"Carrot": "carrot",
+	"Raddish": "radish",
+	"Corn": "corn",
+	"Tomato": "tomato",
+	"Cabbage": "cabbage",
+	"wheat": "wheat"
+}
+var shop_tool_map: Dictionary = {
+	"Scythe": "scythe",
+	"Hoe": "hoe",
+	"Spade": "spade"
+}
 
 @onready var tile_map_layer: TileMapLayer = %Main_Tiles
 @onready var tooltip_label = get_node("/root/main/UI/MarginContainer2/tooltip")
+@onready var shop_canvas: CanvasLayer = get_node("/root/main/Shop")
+@onready var score_label: Label = get_node("/root/main/UI/MarginContainer3/CenterContainer/Score")
 
 func _physics_process(_delta: float) -> void:
 	# Track whether a movement key is actually being held down
@@ -80,10 +108,29 @@ func _input(event: InputEvent) -> void:
 
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		var mouse_world_pos = get_global_mouse_position()
+
+		if shop_open:
+			var grid = shop_canvas.get_node("ColorRect/MarginContainer/TextureRect/GridContainer")
+			for child in grid.get_children():
+				if child is TextureRect:
+					var rect = child.get_rect()
+					var global_rect = Rect2(child.global_position, rect.size)
+					if mouse_world_pos.x >= global_rect.position.x and mouse_world_pos.x <= global_rect.position.x + global_rect.size.x and mouse_world_pos.y >= global_rect.position.y and mouse_world_pos.y <= global_rect.position.y + global_rect.size.y:
+						_buy_item(child.name)
+						return
+			shop_open = false
+			shop_canvas.visible = false
+			return
+
 		var tile_coords = tile_map_layer.local_to_map(tile_map_layer.to_local(mouse_world_pos))
 		var existing_tile = tile_map_layer.get_cell_tile_data(tile_coords)
 		var world_pos = tile_map_layer.to_global(tile_map_layer.map_to_local(tile_coords))
 		var tile_key = str(tile_coords)
+
+		if existing_tile != null and tile_map_layer.get_cell_source_id(tile_coords) == 3:
+			shop_open = !shop_open
+			shop_canvas.visible = shop_open
+			return
 
 		match current_tool:
 			"spade":
@@ -116,6 +163,25 @@ func _input(event: InputEvent) -> void:
 				get_tree().current_scene.add_child(new_crop)
 				%Tool.update_seed_display(crop_type, seeds[crop_type])
 
+func _update_score() -> void:
+	score_label.text = str(score)
+
+func _buy_item(item_name: String) -> void:
+	var price = shop_items[item_name]
+	if score < price:
+		_show_tooltip("Insufficient score!")
+		return
+	score -= price
+	_update_score()
+	if item_name in shop_seed_map:
+		var crop_type = shop_seed_map[item_name]
+		seeds[crop_type] += 1
+		_show_tooltip("Bought " + item_name + "!")
+	elif item_name in shop_tool_map:
+		var tool_name = shop_tool_map[item_name]
+		set_tool.emit(tool_name)
+		_show_tooltip("Bought " + item_name + "!")
+
 func _show_tooltip(text: String) -> void:
 	tooltip_label.text = text
 	tooltip_label.visible = true
@@ -134,7 +200,10 @@ func _ready() -> void:
 	set_tool.emit("none")
 	%Menu.visible = true
 	%Tool.tool = "none"
+	_update_score()
 
 
 func _on_button_pressed() -> void:
 	%Menu.visible = false
+	shop_open = false
+	shop_canvas.visible = false
