@@ -9,9 +9,19 @@
 [ext_resource type="Texture2D" uid="uid://bql7p76ibl3s3" path="res://assets/fence_remix.png" id="5_272bh"]
 [ext_resource type="Texture2D" uid="uid://dwk6vy0abqy80" path="res://assets/fence_00.png" id="6_5vw27"]
 [ext_resource type="Texture2D" uid="uid://cq7xj3p6ov23p" path="res://assets/shop.png" id="8_dg77c"]
+[ext_resource type="Texture2D" uid="uid://dvsxrabupvjna" path="res://assets/kenney_tiny-farm/Tiles/tile_0086.png" id="8_efxa6"]
+[ext_resource type="Texture2D" uid="uid://b8krebgigme4u" path="res://assets/kenney_tiny-farm/Tiles/tile_0087.png" id="9_dg77c"]
+[ext_resource type="Texture2D" uid="uid://2611hduohg7" path="res://assets/kenney_tiny-farm/Tiles/tile_0088.png" id="10_ycdy4"]
 [ext_resource type="Script" uid="uid://cqmf6jyvtouto" path="res://tool.gd" id="11_dg77c"]
 [ext_resource type="FontFile" uid="uid://bsyiy07f05wyf" path="res://assets/Monocraft-nerd-fonts-patched.ttc" id="11_efxa6"]
 [ext_resource type="Texture2D" uid="uid://mfl864r12711" path="res://assets/blank.png" id="11_ycdy4"]
+[ext_resource type="Texture2D" uid="uid://b7omb8o3imgrh" path="res://assets/Wood Boards - modified.png" id="13_ryguw"]
+[ext_resource type="Texture2D" uid="uid://ck3rcge6aid52" path="res://assets/kenney_tiny-farm/Tiles/tile_0010.png" id="14_d13ii"]
+[ext_resource type="Texture2D" uid="uid://bkf4pvmm72qed" path="res://assets/kenney_tiny-farm/Tiles/tile_0022.png" id="15_1u8w0"]
+[ext_resource type="Texture2D" uid="uid://7t66d2osqfmd" path="res://assets/kenney_tiny-farm/Tiles/tile_0034.png" id="16_0odxb"]
+[ext_resource type="Texture2D" uid="uid://dbncxvgyu54fh" path="res://assets/kenney_tiny-farm/Tiles/tile_0046.png" id="17_lswn8"]
+[ext_resource type="Texture2D" uid="uid://ck0ugj4s4id7d" path="res://assets/kenney_tiny-farm/Tiles/tile_0058.png" id="18_a6jrf"]
+[ext_resource type="Texture2D" uid="uid://doat1w23ymatq" path="res://assets/kenney_tiny-farm/Tiles/tile_0070.png" id="19_xuqvo"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g4v7s"]
 atlas = ExtResource("2_lquwl")
@@ -549,6 +559,107 @@ size_flags_vertical = 8
 theme_override_fonts/font = ExtResource("11_efxa6")
 theme_override_font_sizes/font_size = 128
 text = "Start"
+
+[node name="Shop" type="CanvasLayer" parent="." unique_id=1759077215]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="Shop" unique_id=1289147991]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.28235295, 0.09803922, 0.03137255, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="Shop/ColorRect" unique_id=2093096435]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 256
+theme_override_constants/margin_bottom = 0
+
+[node name="TextureRect" type="TextureRect" parent="Shop/ColorRect/MarginContainer" unique_id=2058219413]
+layout_mode = 2
+texture = ExtResource("13_ryguw")
+stretch_mode = 5
+
+[node name="GridContainer" type="GridContainer" parent="Shop/ColorRect/MarginContainer/TextureRect" unique_id=1265246817]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 496.0
+offset_top = 90.0
+offset_right = -496.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 3
+
+[node name="Carrot" type="TextureRect" parent="Shop/ColorRect/MarginContainer/TextureRect/GridContainer" unique_id=711571254]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("14_d13ii")
+stretch_mode = 5
+
+[node name="Raddish" type="TextureRect" parent="Shop/ColorRect/MarginContainer/TextureRect/GridContainer" unique_id=2004301655]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("15_1u8w0")
+stretch_mode = 5
+
+[node name="Corn" type="TextureRect" parent="Shop/ColorRect/MarginContainer/TextureRect/GridContainer" unique_id=550425947]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("16_0odxb")
+stretch_mode = 5
+
+[node name="Tomato" type="TextureRect" parent="Shop/ColorRect/MarginContainer/TextureRect/GridContainer" unique_id=661181982]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("17_lswn8")
+stretch_mode = 5
+
+[node name="Cabbage" type="TextureRect" parent="Shop/ColorRect/MarginContainer/TextureRect/GridContainer" unique_id=425783175]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("18_a6jrf")
+stretch_mode = 5
+
+[node name="wheat" type="TextureRect" parent="Shop/ColorRect/MarginContainer/TextureRect/GridContainer" unique_id=275441175]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("19_xuqvo")
+stretch_mode = 5
+
+[node name="Scythe" type="TextureRect" parent="Shop/ColorRect/MarginContainer/TextureRect/GridContainer" unique_id=235689579]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("10_ycdy4")
+stretch_mode = 5
+
+[node name="Hoe" type="TextureRect" parent="Shop/ColorRect/MarginContainer/TextureRect/GridContainer" unique_id=1249750168]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("9_dg77c")
+stretch_mode = 5
+
+[node name="Spade" type="TextureRect" parent="Shop/ColorRect/MarginContainer/TextureRect/GridContainer" unique_id=642957971]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("8_efxa6")
+stretch_mode = 5
 
 [connection signal="set_tool" from="Farmer" to="Farmer" method="_on_set_tool"]
 [connection signal="set_tool" from="Farmer" to="UI/MarginContainer/CenterContainer/Tool" method="_on_farmer_set_tool"]

@@ -34,4 +34,5 @@ is this too much (We will find out!)
 #assets by
 Kenney (so good!)
 me (a few)
-kar_anri (the shop)
+kar_anri (the shop) - lightly modified
+jwiese (shelves) - quite modified
