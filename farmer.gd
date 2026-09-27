@@ -87,7 +87,7 @@ func _input(event: InputEvent) -> void:
 
 		match current_tool:
 			"spade":
-				if existing_tile != null:
+				if existing_tile != null and tile_map_layer.get_cell_source_id(tile_coords) == 0:
 					tile_map_layer.erase_cell(tile_coords)
 				hoed_tiles.erase(tile_key)
 
