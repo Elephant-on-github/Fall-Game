@@ -190,6 +190,9 @@ func _show_tooltip(text: String) -> void:
 	tooltip_label.text = text
 	tooltip_label.visible = true
 	tooltip_label.modulate.a = 1.0
+	var existing_tween = tooltip_label.get_tween()
+	if existing_tween != null:
+		existing_tween.kill()
 	var tween = create_tween()
 	tween.tween_property(tooltip_label, "modulate:a", 0.0, 0.8)
 	tween.tween_callback(func(): tooltip_label.visible = false)
@@ -204,6 +207,7 @@ func _ready() -> void:
 	set_tool.emit("none")
 	%Menu.visible = true
 	%Tool.tool = "none"
+	%UI.visible = false
 	_update_score()
 
 
@@ -211,3 +215,4 @@ func _on_button_pressed() -> void:
 	%Menu.visible = false
 	shop_open = false
 	shop_canvas.visible = false
+	%UI.visible = true
