@@ -1,4 +1,4 @@
-extends TextureRect
+extends Sprite2D
 
 @export var fall_speed: float = 100.0
 @export var sway_speed: float = 2.0
