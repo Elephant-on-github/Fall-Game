@@ -4,14 +4,15 @@ var tool: String = "none"
 var seeds_map: Dictionary = {
 	"carrot": true, "radish": true, "corn": true, "tomato": true, "cabbage": true, "wheat": true
 }
-
-@onready var number_label: Label = $number
+var number_label: Label
 
 func _ready() -> void:
 	tool = "none"
 	frame = 3
 	stop()
-	number_label.visible = false
+	number_label = $number as Label
+	if number_label:
+		number_label.visible = false
 
 func _on_farmer_set_tool(tool: String) -> void:
 	if tool == "hoe": frame = 2
@@ -26,6 +27,9 @@ func _on_farmer_set_tool(tool: String) -> void:
 	elif tool == "wheat": frame = 9
 
 func update_seed_display(tool_name: String, seed_count: int) -> void:
+	if number_label == null:
+		number_label = $number as Label
+		if number_label == null: return
 	_on_farmer_set_tool(tool_name)
 	if tool_name in seeds_map:
 		number_label.visible = true
