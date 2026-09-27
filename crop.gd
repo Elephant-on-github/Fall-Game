@@ -1,6 +1,6 @@
 extends AnimatedSprite2D
 
-@export var growth_interval: float = 5.0
+@export var growth_interval: float = 30.0
 
 var growth_timer: float = 0.0
 
