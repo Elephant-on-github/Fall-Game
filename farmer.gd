@@ -11,6 +11,7 @@ const leaf_scene = preload("res://leaf.tscn")
 signal set_tool(tool : String)
 var current_tool: String = "none"
 var hoed_tiles: Dictionary = {}
+var crops: Dictionary = {}
 var crop_frames: Dictionary = {
 	"carrot": 0,
 	"radish": 4,
@@ -151,12 +152,7 @@ func _input(event: InputEvent) -> void:
 			return
 
 		if source_id == 5:
-			if current_tool == "scythe":
-				tile_map_layer.erase_cell(tile_coords)
-				score += 1
-				_update_score()
-			else:
-				_show_tooltip("Use scythe to harvest!")
+			_show_tooltip("Use scythe to harvest!")
 			return
 
 		if source_id == 6:
@@ -170,6 +166,7 @@ func _input(event: InputEvent) -> void:
 				new_crop.frame = crop_frames[current_tool]
 				new_crop.global_position = world_pos
 				get_tree().current_scene.add_child(new_crop)
+				crops[tile_key] = new_crop
 				%Tool.update_seed_display(current_tool, seeds[current_tool])
 			else:
 				_show_tooltip("Select a seed with number keys!")
@@ -193,7 +190,18 @@ func _input(event: InputEvent) -> void:
 				new_dirt.global_position = world_pos
 				get_tree().current_scene.add_child(new_dirt)
 				hoed_tiles[tile_key] = true
-			"scythe": pass
+			"scythe":
+			if crops.has(tile_key):
+				var crop = crops[tile_key]
+				if crop.frame % 4 == 2:
+					crop.queue_free()
+					crops.erase(tile_key)
+					score += 5
+					_update_score()
+				else:
+					_show_tooltip("Crop not ready yet!")
+			else:
+				_show_tooltip("No crop to harvest!")
 
 			_:
 				if not hoed_tiles.has(tile_key):
