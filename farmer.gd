@@ -190,18 +190,18 @@ func _input(event: InputEvent) -> void:
 				new_dirt.global_position = world_pos
 				get_tree().current_scene.add_child(new_dirt)
 				hoed_tiles[tile_key] = true
-		"scythe":
-			if crops.has(tile_key):
-				var crop = crops[tile_key]
-				if crop.frame % 4 == 2:
-					crop.queue_free()
-					crops.erase(tile_key)
-					score += 5
-					_update_score()
+			"scythe":
+				if crops.has(tile_key):
+					var crop = crops[tile_key]
+					if crop.frame % 4 == 2:
+						crop.queue_free()
+						crops.erase(tile_key)
+						score += 5
+						_update_score()
+					else:
+						_show_tooltip("Crop not ready yet!")
 				else:
-					_show_tooltip("Crop not ready yet!")
-			else:
-				_show_tooltip("No crop to harvest!")
+					_show_tooltip("No crop to harvest!")
 
 			_:
 				if not hoed_tiles.has(tile_key):
@@ -245,7 +245,7 @@ func _show_tooltip(text: String) -> void:
 	if tooltip_tween != null and tooltip_tween.is_valid():
 		tooltip_tween.kill()
 	tooltip_tween = create_tween()
-	tooltip_tween.tween_property(tooltip_label, "modulate:a", 0.0, 0.8)
+	tooltip_tween.tween_property(tooltip_label, "modulate:a", 0.0, 2.0)
 	tooltip_tween.tween_callback(func(): tooltip_label.visible = false)
 
 func _process(delta: float) -> void:

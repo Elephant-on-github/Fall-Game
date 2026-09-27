@@ -18,7 +18,7 @@ func _process(delta: float) -> void:
 	position.y += fall_speed * speed_multiplier * delta
 	var farmer = get_node_or_null("/root/main/Farmer")
 	if farmer != null:
-		wind_offset -= farmer.velocity.x * delta * 0.5
+		wind_offset -= farmer.velocity.x * delta
 	position.x = start_position.x + sin(Time.get_ticks_msec() / 1000.0 * sway_speed) * sway_amount + wind_offset
 	if position.y > get_viewport().get_visible_rect().size.y + 50:
 		queue_free()
