@@ -198,21 +198,25 @@ func _input(event: InputEvent) -> void:
 				else:
 					_show_tooltip("No crop to harvest!")
 
-			_:
-				if source_id != 8:
-					_show_tooltip("Need to hoe this first!")
-					return
-					var crop_type = current_tool
-					if seeds[crop_type] <= 0:
-						_show_tooltip("No seeds left!")
-						return
-					seeds[crop_type] -= 1
-					var new_crop = crop_scene.instantiate()
-					new_crop.stop()
-					new_crop.frame = crop_frames[crop_type]
-					new_crop.global_position = world_pos
-					get_tree().current_scene.add_child(new_crop)
-					%Tool.update_seed_display(crop_type, seeds[crop_type])
+		_:
+			if source_id != 8:
+				_show_tooltip("Need to hoe this first!")
+				return
+			if current_tool not in seeds:
+				_show_tooltip("Select a seed with number keys!")
+				return
+			var crop_type = current_tool
+			if seeds[crop_type] <= 0:
+				_show_tooltip("No seeds left!")
+				return
+			seeds[crop_type] -= 1
+			var new_crop = crop_scene.instantiate()
+			new_crop.stop()
+			new_crop.frame = crop_frames[crop_type]
+			new_crop.global_position = world_pos
+			get_tree().current_scene.add_child(new_crop)
+			crops[tile_key] = new_crop
+			%Tool.update_seed_display(crop_type, seeds[crop_type])
 
 func _update_score() -> void:
 	score_label.text = str(score)
