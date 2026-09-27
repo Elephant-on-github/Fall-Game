@@ -6,11 +6,10 @@ extends CharacterBody2D
 @onready var footstep_player: AudioStreamPlayer2D = $Footsteps
 
 const crop_scene = preload("res://crop.tscn")
-const dirt_scene = preload("res://dirt.tscn")
+
 const leaf_scene = preload("res://leaf.tscn")
 signal set_tool(tool : String)
 var current_tool: String = "none"
-var hoed_tiles: Dictionary = {}
 var crops: Dictionary = {}
 var crop_frames: Dictionary = {
 	"carrot": 0,
@@ -177,19 +176,15 @@ func _input(event: InputEvent) -> void:
 			return
 
 		match current_tool:
-			"spade":
-				if existing_tile != null and tile_map_layer.get_cell_source_id(tile_coords) == 0:
-					tile_map_layer.erase_cell(tile_coords)
-				hoed_tiles.erase(tile_key)
+		"spade":
+			if existing_tile != null and tile_map_layer.get_cell_source_id(tile_coords) == 8:
+				tile_map_layer.erase_cell(tile_coords)
 
-			"hoe":
-				if existing_tile != null:
-					_show_tooltip("Can't hoe here!")
-					return
-				var new_dirt = dirt_scene.instantiate()
-				new_dirt.global_position = world_pos
-				get_tree().current_scene.add_child(new_dirt)
-				hoed_tiles[tile_key] = true
+		"hoe":
+			if existing_tile != null:
+				_show_tooltip("Can't hoe here!")
+				return
+			tile_map_layer.set_cell(tile_coords, 8, Vector2i.ZERO, Vector2i.ZERO)
 			"scythe":
 				if crops.has(tile_key):
 					var crop = crops[tile_key]
@@ -203,10 +198,10 @@ func _input(event: InputEvent) -> void:
 				else:
 					_show_tooltip("No crop to harvest!")
 
-			_:
-				if not hoed_tiles.has(tile_key):
-					_show_tooltip("Need to hoe this first!")
-					return
+		_:
+			if source_id != 8:
+				_show_tooltip("Need to hoe this first!")
+				return
 				var crop_type = current_tool
 				if seeds[crop_type] <= 0:
 					_show_tooltip("No seeds left!")
