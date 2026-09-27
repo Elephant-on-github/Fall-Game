@@ -213,12 +213,9 @@ func _process(delta: float) -> void:
 
 func _spawn_leaf() -> void:
 	var leaf = leaf_scene.instantiate()
-	get_node("/root/main").add_child(leaf)
-	var cam = get_node("/root/main/Camera2D")
-	var visible_size = get_viewport_rect().size / cam.zoom
-	var x = cam.position.x + randf_range(-visible_size.x / 2, visible_size.x / 2)
-	var y = cam.position.y - visible_size.y - 20
-	leaf.global_position = Vector2(x, y)
+	get_node("/root/main/UI").add_child(leaf)
+	var screen_size = get_viewport_rect().size
+	leaf.position = Vector2(randf_range(0, screen_size.x), -50)
 
 func _on_set_tool(tool: String) -> void:
 	current_tool = tool
