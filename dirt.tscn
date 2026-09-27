@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://d32w3fhwstlpd"]
+
+[ext_resource type="Texture2D" uid="uid://btqjwtxnklnsk" path="res://assets/farm_dirt.png" id="1_lpaap"]
+
+[node name="dirt" type="Sprite2D" unique_id=794948739]
+z_index = 2
+scale = Vector2(2, 2)
+texture = ExtResource("1_lpaap")
