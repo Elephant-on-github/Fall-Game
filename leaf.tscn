@@ -1,9 +1,11 @@
 [gd_scene format=3 uid="uid://bmjkva8dobek3"]
 
 [ext_resource type="Texture2D" uid="uid://byrhf7bbovk62" path="res://assets/leaf.png" id="1_p3lty"]
-[ext_resource type="Script" path="res://leaf.gd" id="2_m48l"]
+[ext_resource type="Script" uid="uid://cfc5fq4yvwuhh" path="res://leaf.gd" id="2_m48l"]
 
 [node name="Leaf" type="TextureRect" unique_id=227438920]
 z_index = 15
+scale = Vector2(4, 4)
+custom_minimum_size = Vector2(10, 10)
 texture = ExtResource("1_p3lty")
 script = ExtResource("2_m48l")

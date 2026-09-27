@@ -208,7 +208,7 @@ func _show_tooltip(text: String) -> void:
 func _process(delta: float) -> void:
 	leaf_spawn_timer -= delta
 	if leaf_spawn_timer <= 0:
-		leaf_spawn_timer = leaf_frequency
+		leaf_spawn_timer = leaf_frequency * randf_range(0.5, 1.5)
 		_spawn_leaf()
 
 func _spawn_leaf() -> void:
