@@ -53,6 +53,7 @@ var shop_tool_map: Dictionary = {
 	"Spade": "spade"
 }
 
+var tooltip_tween: Tween = null
 @onready var tile_map_layer: TileMapLayer = %Main_Tiles
 @onready var tooltip_label = get_node("/root/main/UI/MarginContainer2/tooltip")
 @onready var shop_canvas: CanvasLayer = get_node("/root/main/Shop")
@@ -107,6 +108,11 @@ func _input(event: InputEvent) -> void:
 			set_tool.emit("cabbage")
 		elif event.keycode == KEY_6:
 			set_tool.emit("wheat")
+
+	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE and shop_open:
+		shop_open = false
+		shop_canvas.visible = false
+		return
 
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		var mouse_world_pos = get_global_mouse_position()
@@ -190,12 +196,11 @@ func _show_tooltip(text: String) -> void:
 	tooltip_label.text = text
 	tooltip_label.visible = true
 	tooltip_label.modulate.a = 1.0
-	var existing_tween = tooltip_label.get_tween()
-	if existing_tween != null:
-		existing_tween.kill()
-	var tween = create_tween()
-	tween.tween_property(tooltip_label, "modulate:a", 0.0, 0.8)
-	tween.tween_callback(func(): tooltip_label.visible = false)
+	if tooltip_tween != null and tooltip_tween.is_valid():
+		tooltip_tween.kill()
+	tooltip_tween = create_tween()
+	tooltip_tween.tween_property(tooltip_label, "modulate:a", 0.0, 0.8)
+	tooltip_tween.tween_callback(func(): tooltip_label.visible = false)
 
 func _on_set_tool(tool: String) -> void:
 	current_tool = tool
