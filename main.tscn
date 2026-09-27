@@ -453,34 +453,38 @@ theme_override_font_sizes/font_size = 8
 text = "12"
 
 [node name="MarginContainer2" type="MarginContainer" parent="UI" unique_id=932847102]
-anchors_preset = 2
-anchor_top = 1.0
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -64.0
-offset_right = 64.0
-grow_vertical = 0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_bottom = 128
 
 [node name="tooltip" type="Label" parent="UI/MarginContainer2" unique_id=762084032]
 unique_name_in_owner = true
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -14.75
-offset_top = -16.5
-offset_right = -3.75
-offset_bottom = -3.5
-grow_horizontal = 0
-grow_vertical = 0
-size_flags_horizontal = 8
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
 theme_override_fonts/font = ExtResource("11_efxa6")
-theme_override_font_sizes/font_size = 8
-text = "12"
+theme_override_font_sizes/font_size = 32
+text = "add the grass"
 
 [node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer2/tooltip" unique_id=962906667]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = -8
+theme_override_constants/margin_right = -8
 
 [node name="ColorRect" type="ColorRect" parent="UI/MarginContainer2/tooltip/MarginContainer" unique_id=1368964740]
+z_index = -1
+layout_mode = 2
+color = Color(0.02745098, 0.02745098, 0.02745098, 0.5647059)
 
 [node name="Menu" type="CanvasLayer" parent="." unique_id=732038459]
 unique_name_in_owner = true
