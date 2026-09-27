@@ -5,6 +5,7 @@
 
 [node name="Leaf" type="TextureRect" unique_id=227438920]
 z_index = 15
+anchors_preset = 0
 scale = Vector2(4, 4)
 custom_minimum_size = Vector2(10, 10)
 texture = ExtResource("1_p3lty")
