@@ -5,14 +5,16 @@ extends TextureRect
 @export var sway_amount: float = 20.0
 
 var start_position: Vector2
+var speed_multiplier: float
 
 func _ready() -> void:
+	speed_multiplier = randf_range(0.4, 1.2)
 	var screen_size = get_viewport().get_visible_rect().size
 	position = Vector2(randf_range(0, screen_size.x), -50)
 	start_position = position
 
 func _process(delta: float) -> void:
-	position.y += fall_speed * delta
+	position.y += fall_speed * speed_multiplier * delta
 	position.x = start_position.x + sin(Time.get_ticks_msec() / 1000.0 * sway_speed) * sway_amount
 	if position.y > get_viewport().get_visible_rect().size.y + 50:
 		queue_free()
