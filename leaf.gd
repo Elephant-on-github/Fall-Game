@@ -6,6 +6,7 @@ extends TextureRect
 
 var start_position: Vector2
 var speed_multiplier: float
+var wind_offset: float = 0.0
 
 func _ready() -> void:
 	speed_multiplier = randf_range(0.4, 1.2)
@@ -15,6 +16,9 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	position.y += fall_speed * speed_multiplier * delta
-	position.x = start_position.x + sin(Time.get_ticks_msec() / 1000.0 * sway_speed) * sway_amount
+	var farmer = get_node_or_null("/root/main/Farmer")
+	if farmer != null:
+		wind_offset -= farmer.velocity.x * delta * 0.5
+	position.x = start_position.x + sin(Time.get_ticks_msec() / 1000.0 * sway_speed) * sway_amount + wind_offset
 	if position.y > get_viewport().get_visible_rect().size.y + 50:
 		queue_free()
