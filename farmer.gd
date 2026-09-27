@@ -184,7 +184,7 @@ func _input(event: InputEvent) -> void:
 				if existing_tile != null:
 					_show_tooltip("Can't hoe here!")
 					return
-				tile_map_layer.set_cell(tile_coords, 8, Vector2i.ZERO, Vector2i.ZERO)
+				tile_map_layer.set_cell(tile_coords, 8, Vector2i.ZERO, 0)
 			"scythe":
 				if crops.has(tile_key):
 					var crop = crops[tile_key]
