@@ -1,20 +1,26 @@
 extends AnimatedSprite2D
 
-# fourth frame is dead
-# 0-3 is carrot
-# 4-7 raddish
-#8-11 corn
-# 12-15 tomato
-# 16-19 cabbage
-# 20-23 wheat
+@export var growth_interval: float = 5.0
 
+var growth_timer: float = 0.0
 
-
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
+	growth_timer = randf_range(0, growth_interval)
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	delta
+	growth_timer -= delta
+	if growth_timer <= 0:
+		growth_timer = growth_interval * randf_range(0.5, 1.5)
+		_grow()
+
+func _grow() -> void:
+	var base_frame := -1
+	for i in range(6):
+		if frame >= i * 4 and frame < (i + 1) * 4:
+			base_frame = i * 4
+			break
+	if base_frame == -1:
+		return
+	var stage := frame - base_frame
+	if stage < 2:
+		frame = base_frame + stage + 1

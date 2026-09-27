@@ -144,6 +144,41 @@ func _input(event: InputEvent) -> void:
 			shop_canvas.visible = shop_open
 			return
 
+		var source_id = tile_map_layer.get_cell_source_id(tile_coords) if existing_tile != null else -1
+
+		if source_id == 4:
+			_show_tooltip("click on shop to buy more")
+			return
+
+		if source_id == 5:
+			if current_tool == "scythe":
+				tile_map_layer.erase_cell(tile_coords)
+				score += 1
+				_update_score()
+			else:
+				_show_tooltip("Use scythe to harvest!")
+			return
+
+		if source_id == 6:
+			if current_tool in seeds:
+				if seeds[current_tool] <= 0:
+					_show_tooltip("No seeds left!")
+					return
+				seeds[current_tool] -= 1
+				var new_crop = crop_scene.instantiate()
+				new_crop.stop()
+				new_crop.frame = crop_frames[current_tool]
+				new_crop.global_position = world_pos
+				get_tree().current_scene.add_child(new_crop)
+				%Tool.update_seed_display(current_tool, seeds[current_tool])
+			else:
+				_show_tooltip("Select a seed with number keys!")
+			return
+
+		if source_id == 7:
+			_show_tooltip("select tool with e,r,t")
+			return
+
 		match current_tool:
 			"spade":
 				if existing_tile != null and tile_map_layer.get_cell_source_id(tile_coords) == 0:
