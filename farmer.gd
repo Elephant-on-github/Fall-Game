@@ -7,6 +7,7 @@ extends CharacterBody2D
 
 const crop_scene = preload("res://crop.tscn")
 const dirt_scene = preload("res://dirt.tscn")
+const leaf_scene = preload("res://leaf.tscn")
 signal set_tool(tool : String)
 var current_tool: String = "none"
 var hoed_tiles: Dictionary = {}
@@ -53,6 +54,8 @@ var shop_tool_map: Dictionary = {
 	"Spade": "spade"
 }
 
+@export var leaf_frequency: float = 1.0
+var leaf_spawn_timer: float = 0.0
 var tooltip_tween: Tween = null
 @onready var tile_map_layer: TileMapLayer = %Main_Tiles
 @onready var tooltip_label = get_node("/root/main/UI/MarginContainer2/tooltip")
@@ -201,6 +204,21 @@ func _show_tooltip(text: String) -> void:
 	tooltip_tween = create_tween()
 	tooltip_tween.tween_property(tooltip_label, "modulate:a", 0.0, 0.8)
 	tooltip_tween.tween_callback(func(): tooltip_label.visible = false)
+
+func _process(delta: float) -> void:
+	leaf_spawn_timer -= delta
+	if leaf_spawn_timer <= 0:
+		leaf_spawn_timer = leaf_frequency
+		_spawn_leaf()
+
+func _spawn_leaf() -> void:
+	var leaf = leaf_scene.instantiate()
+	get_node("/root/main").add_child(leaf)
+	var cam = get_node("/root/main/Camera2D")
+	var visible_size = get_viewport_rect().size / cam.zoom
+	var x = cam.position.x + randf_range(-visible_size.x / 2, visible_size.x / 2)
+	var y = cam.position.y - visible_size.y - 20
+	leaf.global_position = Vector2(x, y)
 
 func _on_set_tool(tool: String) -> void:
 	current_tool = tool
