@@ -91,8 +91,10 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed:
 		if event.keycode == KEY_E:
 			set_tool.emit("spade")
-		elif event.keycode == KEY_H:
+		elif event.keycode == KEY_R:
 			set_tool.emit("hoe")
+		elif event.keycode == KEY_T:
+			set_tool.emit("scythe")
 		elif event.keycode == KEY_1:
 			set_tool.emit("carrot")
 		elif event.keycode == KEY_2:
@@ -108,6 +110,7 @@ func _input(event: InputEvent) -> void:
 
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		var mouse_world_pos = get_global_mouse_position()
+		var mouse_screen_pos = get_viewport().get_mouse_position()
 
 		if shop_open:
 			var grid = shop_canvas.get_node("ColorRect/MarginContainer/TextureRect/GridContainer")
@@ -115,7 +118,7 @@ func _input(event: InputEvent) -> void:
 				if child is TextureRect:
 					var rect = child.get_rect()
 					var global_rect = Rect2(child.global_position, rect.size)
-					if mouse_world_pos.x >= global_rect.position.x and mouse_world_pos.x <= global_rect.position.x + global_rect.size.x and mouse_world_pos.y >= global_rect.position.y and mouse_world_pos.y <= global_rect.position.y + global_rect.size.y:
+					if mouse_screen_pos.x >= global_rect.position.x and mouse_screen_pos.x <= global_rect.position.x + global_rect.size.x and mouse_screen_pos.y >= global_rect.position.y and mouse_screen_pos.y <= global_rect.position.y + global_rect.size.y:
 						_buy_item(child.name)
 						return
 			shop_open = false
@@ -146,6 +149,7 @@ func _input(event: InputEvent) -> void:
 				new_dirt.global_position = world_pos
 				get_tree().current_scene.add_child(new_dirt)
 				hoed_tiles[tile_key] = true
+			"scythe": pass
 
 			_:
 				if not hoed_tiles.has(tile_key):
